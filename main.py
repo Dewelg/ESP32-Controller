@@ -1,10 +1,11 @@
-import uvicorn
 from fastapi import FastAPI
-
+from api import routes
+from models import Base
+from database import engine
 
 app = FastAPI()
 
-@app.get("/")
-async def hello():
-    return {"message" : "Hello World"}
 
+Base.matadata.create_all(bind=engine)
+
+app.inculde_router(routes.router)
